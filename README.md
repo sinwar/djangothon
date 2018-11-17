@@ -29,6 +29,6 @@ CSRF_REFERER_CHECK=True
 ```
 3. `Model_Graph_UI`: Created a UI system to show the real time updations, deletions and referencing of django models. A Graph diagram image has been created to facilitate developers to see and verify the model schema.
 
-![Graph UI](Screenshot.png)
+![Graph UI](djangoupper/Screenshot.png)
 
 
