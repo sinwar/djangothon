@@ -1,5 +1,17 @@
+import sys
 appname = "djangoupper"
-file = open("models.py", "r")
+if len(sys.argv)<=1:
+	print("provide path to model.py")
+	sys.exit()
+
+completename = sys.argv[1]
+directoryname = ""
+if "/" in completename:
+	id = completename.find("/")
+	directoryname = completename[0:id].strip()
+	directoryname += "/"
+
+file = open(sys.argv[1], "r")
 modelines = file.readlines()
 modelfields = {}
 listfields = []
@@ -49,7 +61,7 @@ for i in models:
 	serializers.append(fieldstring)
 	serializers.append("");
 
-file=open('serializers.py', "a+")
+file=open(directoryname+'serializers.py', "a+")
 for i in serializers:
 	file.write(i+"\n")
 file.close()
@@ -91,7 +103,7 @@ for i in models:
 	apiviews.append("  serializer_class = "+ i + "DetailSerializer")
 	apiviews.append("")
 
-file=open('views.py', 'a+')
+file=open(directoryname+'views.py', 'a+')
 for i in apiviews:
 	file.write(i+"\n")
 file.close()
