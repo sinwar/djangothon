@@ -1,0 +1,14 @@
+{
+  "name": "graphmodel-fe",
+  "version": "1.0.0",
+  "description": "FE for graph models",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test ok\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
