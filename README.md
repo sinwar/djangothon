@@ -5,6 +5,11 @@ django extensions for model schema and CSRF
 # Django upper
 1. `Model_Graph_UI`: Created a UI system to show the real time updations, deletions and referencing of django models. A Graph diagram image has been created to facilitate developers to see and verify the model schema.
 
+How to use :
+Start djangoupper app using ``` python manage.py runserver ```
+Go to graphmodel-fe and start server ``` node index.js ```
+
+
 ![Graph UI](djangoupper/Screenshot.png)
 
 2. `CODE GENERATION` : In django rest if developer create a model then for CRUD opertion developer need to write lots of repetitive code for serializers and generic api views. This code will automatically generate the required code for each model of app.
