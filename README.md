@@ -33,5 +33,6 @@ CSRF_REFERER_CHECK=True
 
 ```
 
-
+4. `XOR query support` : This package provides support for XOR queries in django. Right now only and or are available in django.-
+` Foobar.objects.filter(Q(blah=1) ^ Q(bar=2))`
 
