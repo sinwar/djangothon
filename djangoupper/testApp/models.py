@@ -36,3 +36,4 @@ class AddBookmark(models.Model):
     user_email=models.EmailField(null=True)
     house_id=models.CharField(max_length=100,default=0)
     add_to_bookmark=models.BooleanField(default=False)
+    admin_email=models.EmailField(null=True)
