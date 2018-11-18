@@ -1,8 +1,24 @@
 import sys
-appname = "djangoupper"
 if len(sys.argv)<=1:
 	print("provide path to model.py")
 	sys.exit()
+
+choice = False
+create=False
+read=False
+update=False
+delete=False
+if len(sys.argv) == 3:
+	choice = True
+	choicstring = sys.argv[2]
+	if "C" in choicstring:
+		create=True
+	if "R" in choicstring:
+		read=True
+	if "U" in choicstring:
+		update=True
+	if "D" in choicstring:
+		delete=True
 
 completename = sys.argv[1]
 directoryname = ""
@@ -25,7 +41,7 @@ for i in modelines:
 		modelname = i[5:endpoint].strip()
 		models.append(modelname)
 
-	if "models.CharField" in i or "models.IntegerField" in i:
+	if "= models." in i:
 		endpoint = i.find("=")
 		if endpoint!=-1:
 			field = i[0:endpoint].strip()
@@ -36,7 +52,7 @@ for i in modelines:
 
 serializers = []
 serializers.append("# generated serializers")
-serializers.append("from " + appname + ".models import *")
+serializers.append("from " + directoryname + ".models import *")
 serializers.append("from rest_framework import serializers")
 
 for i in models:
@@ -66,42 +82,46 @@ for i in serializers:
 	file.write(i+"\n")
 file.close()
 
-print("# generated generic api views")
+print("# generated serializers and generic api views")
 apiviews = []
 apiviews.append("from rest_framework.generics import *")
-apiviews.append("from " + appname + ".models import *")
+apiviews.append("from " + directoryname + ".models import *")
 apiviews.append("from .serializers import *")
 
 for i in models:
-	apiviews.append("class " + i +"ListAPIView(ListAPIView):")
-	apiviews.append("  # list api view")
-	apiviews.append("  queryset = " + i +".objects.all()")
-	apiviews.append("  serializer_class = "+ i + "DetailSerializer")
-	apiviews.append("")
+	if not choice or ( choice and read ):
+		apiviews.append("class " + i +"ListAPIView(ListAPIView):")
+		apiviews.append("  # list api view")
+		apiviews.append("  queryset = " + i +".objects.all()")
+		apiviews.append("  serializer_class = "+ i + "DetailSerializer")
+		apiviews.append("")
 
-	apiviews.append("class " + i +"DetailAPIView(RetrieveAPIView):")
-	apiviews.append("  # detail api view")
-	apiviews.append("  queryset = " + i +".objects.all()")
-	apiviews.append("  serializer_class = "+ i + "DetailSerializer")
-	apiviews.append("")
+		apiviews.append("class " + i +"DetailAPIView(RetrieveAPIView):")
+		apiviews.append("  # detail api view")
+		apiviews.append("  queryset = " + i +".objects.all()")
+		apiviews.append("  serializer_class = "+ i + "DetailSerializer")
+		apiviews.append("")
 
-	apiviews.append("class " + i +"CreateAPIView(CreateAPIView):")
-	apiviews.append("  # create api view")
-	apiviews.append("  queryset = " + i +".objects.all()")
-	apiviews.append("  serializer_class = "+ i + "CreateUpdateSerializer")
-	apiviews.append("")
+	if not choice or ( choice and read ):
+		apiviews.append("class " + i +"CreateAPIView(CreateAPIView):")
+		apiviews.append("  # create api view")
+		apiviews.append("  queryset = " + i +".objects.all()")
+		apiviews.append("  serializer_class = "+ i + "CreateUpdateSerializer")
+		apiviews.append("")
 
-	apiviews.append("class " + i +"UpdateAPIView(UpdateAPIView):")
-	apiviews.append("  # update api view")
-	apiviews.append("  queryset = " + i +".objects.all()")
-	apiviews.append("  serializer_class = "+ i + "CreateUpdateSerializer")
-	apiviews.append("")
+	if not choice or ( choice and update ):
+		apiviews.append("class " + i +"UpdateAPIView(UpdateAPIView):")
+		apiviews.append("  # update api view")
+		apiviews.append("  queryset = " + i +".objects.all()")
+		apiviews.append("  serializer_class = "+ i + "CreateUpdateSerializer")
+		apiviews.append("")
 
-	apiviews.append("class " + i +"DeleteAPIView(DestroyAPIView):")
-	apiviews.append("  # delete api view")
-	apiviews.append("  queryset = " + i +".objects.all()")
-	apiviews.append("  serializer_class = "+ i + "DetailSerializer")
-	apiviews.append("")
+	if not choice or ( choice and delete ):
+		apiviews.append("class " + i +"DeleteAPIView(DestroyAPIView):")
+		apiviews.append("  # delete api view")
+		apiviews.append("  queryset = " + i +".objects.all()")
+		apiviews.append("  serializer_class = "+ i + "DetailSerializer")
+		apiviews.append("")
 
 file=open(directoryname+'views.py', 'a+')
 for i in apiviews:
