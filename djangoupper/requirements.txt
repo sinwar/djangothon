@@ -24,7 +24,7 @@ Jinja2==2.7.3
 jsonfield==1.0.3
 lxml==4.2.1
 MarkupSafe==0.23
-nltk==3.2.2
+nltk==3.4.5
 numpy==1.12.1
 oauthlib==2.0.7
 olefile==0.44
