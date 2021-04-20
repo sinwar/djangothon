@@ -47,4 +47,4 @@ social-auth-core==1.7.0
 static3==0.7.0
 urllib3==1.22
 webencodings==0.5.1
-Werkzeug==0.10.4
+Werkzeug==0.15.3
