@@ -33,7 +33,7 @@ Pillow==4.1.0
 pinax-eventlog==1.1.1
 pinax-theme-bootstrap==7.8.0
 pinax-webanalytics==2.0.1
-PyJWT==1.6.1
+PyJWT==2.4.0
 pymongo==2.8
 pyparsing==2.2.0
 python-crfsuite==0.9.2
